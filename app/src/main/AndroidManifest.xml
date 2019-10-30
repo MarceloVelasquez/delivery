@@ -14,23 +14,23 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".RegistroActivity"
-            android:label="@string/title_activity_registro"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/titulo_registro"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DetalleActivity"
-            android:label="@string/title_activity_detalle"
+            android:label="@string/titulo_detalle"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RestauranteActivity"
-            android:label="@string/title_activity_restaurante"
+            android:label="@string/titulo_pedidos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DatosActivity"
-            android:label="@string/title_activity_datos"
+            android:label="@string/titulo_datos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CarritoActivity"
-            android:label="@string/title_activity_carrito"
+            android:label="@string/titulo_carrito"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ClienteActivity"
