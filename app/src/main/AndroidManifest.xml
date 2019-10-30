@@ -5,15 +5,23 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:fullBackupContent="false"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".DatosActivity"
+            android:label="@string/title_activity_datos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CarritoActivity"
+            android:label="@string/title_activity_carrito"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ClienteActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
