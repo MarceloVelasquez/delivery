@@ -13,6 +13,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".RegistroActivity"
+            android:label="@string/title_activity_registro"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".DetalleActivity"
+            android:label="@string/title_activity_detalle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RestauranteActivity"
+            android:label="@string/title_activity_restaurante"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".DatosActivity"
             android:label="@string/title_activity_datos"
             android:theme="@style/AppTheme.NoActionBar" />

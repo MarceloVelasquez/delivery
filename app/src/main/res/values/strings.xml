@@ -9,6 +9,9 @@
     <string name="titulo_registro">Registrar productos</string>
     <string name="titulo_detalle">Detalle del pedido</string>
 
+    <string name="detalle_nombre">Nombre del cliente (978563421)</string>
+    <string name="detalle_direccion">Direccion de envio</string>
+
     <array name="categorias">
         <item>Platos a la carta</item>
         <item>Menu</item>
@@ -19,8 +22,15 @@
     <string name="label_telefono">Digite su numero de telefono</string>
     <string name="label_direccion">Escriba su dirección</string>
 
+    <string name="registro_nombre">Ingrese el nombre</string>
+    <string name="registro_precio">Precio</string>
+
     <string name="boton_pedir">Hacer pedido</string>
+    <string name="boton_registrar">Registrar</string>
 
     <string name="title_activity_carrito">CarritoActivity</string>
     <string name="title_activity_datos">DatosActivity</string>
+    <string name="title_activity_restaurante">RestauranteActivity</string>
+    <string name="title_activity_detalle">DetalleActivity</string>
+    <string name="title_activity_registro">RegistroActivity</string>
 </resources>
