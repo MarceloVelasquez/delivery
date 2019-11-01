@@ -3,6 +3,7 @@
 
     <string name="opcion_admin">Cambiar a Restaurante</string>
     <string name="opcion_cliente">Cambiar a Cliente</string>
+    <string name="opcion_registro">Registrar producto</string>
 
     <string name="titulo_carrito">Carrito de compra</string>
     <string name="titulo_pedidos">Lista de pedidos</string>
