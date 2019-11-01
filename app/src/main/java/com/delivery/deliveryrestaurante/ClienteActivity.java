@@ -1,9 +1,14 @@
 package com.delivery.deliveryrestaurante;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.delivery.deliveryrestaurante.clases.Producto;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,22 +16,49 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteActivity extends AppCompatActivity {
-
+    private ListView lista;
+    private FirebaseFirestore db ;
+    private List productos = new ArrayList();
+    private ArrayAdapter adaptador;
+    private Spinner categorias;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        lista = findViewById(R.id.lista_general);
+        categorias = findViewById(R.id.spinner);
+        adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1,productos) ;
+        lista.setAdapter(adaptador);
+        db = FirebaseFirestore.getInstance();
+
+        categorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cargarDatos(categorias.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.carrito);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Carrito de compras", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(ClienteActivity.this, CarritoActivity.class));
             }
         });
     }
@@ -47,9 +79,38 @@ public class ClienteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cliente) {
-            return true;
+            startActivity(new Intent(this, RestauranteActivity.class));
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void cargarDatos(String categoria){
+
+        productos.clear();
+        db.collection("productos").whereEqualTo("categoria", categoria)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>(){
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                        if (!queryDocumentSnapshots.isEmpty()) {
+
+                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+
+                            for (DocumentSnapshot doc : list) {
+
+                                Producto pro = doc.toObject(Producto.class);
+                                productos.add(pro.getNombre());
+
+                            }
+                            adaptador.notifyDataSetChanged();
+
+                        }
+
+
+                    }
+                });
+
     }
 }
