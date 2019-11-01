@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "259419196788",
+    "firebase_url": "https://d-rest.firebaseio.com",
+    "project_id": "d-rest",
+    "storage_bucket": "d-rest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259419196788:android:b3d22dbbb7e29b90c1b021",
+        "android_client_info": {
+          "package_name": "com.delivery.deliveryrestaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259419196788-2693f78b3och5i08stvg6obnae18oq1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivery.deliveryrestaurante",
+            "certificate_hash": "c4a1264bc3e9a4c9428c0047c43e20a9388f8dfa"
+          }
+        },
+        {
+          "client_id": "259419196788-lv58otn37nnelhq20fq5d4t3bo2tsdob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFX6z1o_nfkUZaLMHGPjFp6DMIANDKRKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259419196788-lv58otn37nnelhq20fq5d4t3bo2tsdob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
