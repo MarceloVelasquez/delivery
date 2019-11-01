@@ -42,6 +42,10 @@ public class RestauranteActivity extends AppCompatActivity {
             startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class));
 
         }
+        if (id == R.id.action_registro) {
+            startActivity(new Intent(RestauranteActivity.this, RegistroActivity.class));
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
