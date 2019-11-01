@@ -1,5 +1,6 @@
 package com.delivery.deliveryrestaurante;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,7 +39,8 @@ public class RestauranteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_restaurante) {
-            return true;
+            startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class));
+
         }
 
         return super.onOptionsItemSelected(item);
