@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.delivery.deliveryrestaurante.RestauranteActivity">
     <item
+        android:id="@+id/action_registrar"
+        android:title="@string/opcion_registrar"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_restaurante"
         android:title="@string/opcion_cliente"
         app:showAsAction="never" />

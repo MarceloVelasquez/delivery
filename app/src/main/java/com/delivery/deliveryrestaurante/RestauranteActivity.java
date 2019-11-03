@@ -40,7 +40,10 @@ public class RestauranteActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_restaurante) {
             startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class));
+        }
 
+        if (id == R.id.action_registrar) {
+            startActivity(new Intent(RestauranteActivity.this, RegistroActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
