@@ -20,16 +20,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteActivity extends AppCompatActivity {
     private ListView lista;
-    private FirebaseFirestore db ;
-    private List productos = new ArrayList();
+    private FirebaseFirestore db;
+    private List productos = new ArrayList<Producto>();
     private ArrayAdapter adaptador;
     private Spinner categorias;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class ClienteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         lista = findViewById(R.id.lista_general);
         categorias = findViewById(R.id.spinner);
-        adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1,productos) ;
+        adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productos);
         lista.setAdapter(adaptador);
         db = FirebaseFirestore.getInstance();
 
@@ -51,6 +53,13 @@ public class ClienteActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Producto pro = (Producto) productos.get(position);
+                Toast.makeText(ClienteActivity.this, pro.getNombre()+" oe "+pro.getPrecio() , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -85,12 +94,15 @@ public class ClienteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void cargarDatos(String categoria){
+
+    public void cargarDatos(String categoria) {
 
         productos.clear();
+        adaptador.notifyDataSetChanged();
+
         db.collection("productos").whereEqualTo("categoria", categoria)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>(){
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
@@ -101,7 +113,7 @@ public class ClienteActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : list) {
 
                                 Producto pro = doc.toObject(Producto.class);
-                                productos.add(pro.getNombre());
+                                productos.add(pro);
 
                             }
                             adaptador.notifyDataSetChanged();
