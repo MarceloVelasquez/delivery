@@ -39,8 +39,12 @@ public class RestauranteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_restaurante) {
-            startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class));
+            startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+        }
 
+        if (id == R.id.action_registrar) {
+            startActivity(new Intent(RestauranteActivity.this, RegistroActivity.class));
         }
         if (id == R.id.action_registro) {
             startActivity(new Intent(RestauranteActivity.this, RegistroActivity.class));

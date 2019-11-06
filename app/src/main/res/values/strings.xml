@@ -3,7 +3,7 @@
 
     <string name="opcion_admin">Cambiar a Restaurante</string>
     <string name="opcion_cliente">Cambiar a Cliente</string>
-    <string name="opcion_registro">Registrar producto</string>
+    <string name="opcion_registrar">Agregar productos</string>
 
     <string name="titulo_carrito">Carrito de compra</string>
     <string name="titulo_pedidos">Lista de pedidos</string>
@@ -11,8 +11,8 @@
     <string name="titulo_registro">Registrar productos</string>
     <string name="titulo_detalle">Detalle del pedido</string>
 
-    <string name="detalle_nombre">Nombre del cliente (978563421)</string>
-    <string name="detalle_direccion">Direccion de envio</string>
+    <string name="ejemplo_texto">Ejemplo texto</string>
+    <string name="ejemplo_precio">S/. 9.99</string>
 
     <array name="categorias">
         <item>Platos a la carta</item>
@@ -28,4 +28,8 @@
 
     <string name="boton_pedir">Hacer pedido</string>
     <string name="boton_registrar">Registrar</string>
+    <string name="boton_comprar">Comprar</string>
+
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

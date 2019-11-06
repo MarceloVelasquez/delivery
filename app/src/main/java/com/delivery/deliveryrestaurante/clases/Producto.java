@@ -1,14 +1,19 @@
 package com.delivery.deliveryrestaurante.clases;
 
+import java.text.DecimalFormat;
+
 public class Producto {
-    private String imagen;
     private String nombre;
     private String categoria;
     private double precio;
     private String id;
 
+<<<<<<< HEAD
     public Producto(String imagen, String nombre, String categoria, double precio, String id) {
         this.setImagen(imagen);
+=======
+    public Producto(String nombre, String categoria, float precio, String id) {
+>>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
         this.setNombre(nombre);
         this.setCategoria(categoria);
         this.setPrecio(precio);
@@ -16,35 +21,27 @@ public class Producto {
     }
 
     public Producto() {
+
     }
 
     public double getPrecio() {
         return precio;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-
     public String getNombre() {
         return nombre;
     }
 
-
+    public String getPrecioEnSoles() {
+        return "S/. " + new DecimalFormat("#.00").format(getPrecio());
+    }
 
     public String getCategoria() {
         return categoria;
     }
 
-
     public String getId() {
         return id;
-    }
-
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public void setNombre(String nombre) {
