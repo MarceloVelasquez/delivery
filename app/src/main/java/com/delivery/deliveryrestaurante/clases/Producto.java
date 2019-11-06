@@ -4,10 +4,10 @@ public class Producto {
     private String imagen;
     private String nombre;
     private String categoria;
-    private float precio;
+    private double precio;
     private String id;
 
-    public Producto(String imagen, String nombre, String categoria, float precio, String id) {
+    public Producto(String imagen, String nombre, String categoria, double precio, String id) {
         this.setImagen(imagen);
         this.setNombre(nombre);
         this.setCategoria(categoria);
@@ -18,7 +18,7 @@ public class Producto {
     public Producto() {
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -55,7 +55,7 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
