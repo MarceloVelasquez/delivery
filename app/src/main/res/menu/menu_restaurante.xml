@@ -11,8 +11,4 @@
         android:id="@+id/action_restaurante"
         android:title="@string/opcion_cliente"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_registro"
-        android:title="@string/opcion_registro"
-        app:showAsAction="never" />
 </menu>
