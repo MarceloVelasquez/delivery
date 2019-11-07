@@ -7,13 +7,12 @@ public class Producto {
     private String categoria;
     private double precio;
     private String id;
+    private String imagen;
 
-<<<<<<< HEAD
+
+
     public Producto(String imagen, String nombre, String categoria, double precio, String id) {
         this.setImagen(imagen);
-=======
-    public Producto(String nombre, String categoria, float precio, String id) {
->>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
         this.setNombre(nombre);
         this.setCategoria(categoria);
         this.setPrecio(precio);
@@ -58,5 +57,12 @@ public class Producto {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
