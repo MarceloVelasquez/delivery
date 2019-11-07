@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.delivery.deliveryrestaurante.clases.Carrito;
 import com.delivery.deliveryrestaurante.clases.Producto;
 import com.delivery.deliveryrestaurante.clases.ProductoAdaptador;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,20 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteActivity extends AppCompatActivity {
-<<<<<<< HEAD
-    private ListView lista;
-    private FirebaseFirestore db;
-    private List productos = new ArrayList<Producto>();
-    private ArrayAdapter adaptador;
-    private Spinner categorias;
-=======
 
     private FirebaseFirestore db;
     private ArrayList<Producto> productos = new ArrayList<>();
     private ProductoAdaptador adaptador;
     private Spinner categorias;
     private EditText input;
->>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +48,7 @@ public class ClienteActivity extends AppCompatActivity {
         ListView lista;
         lista = findViewById(R.id.lista_general);
         categorias = findViewById(R.id.spinner);
-<<<<<<< HEAD
-        adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, productos);
-=======
         adaptador = new ProductoAdaptador(this, productos);
->>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
         lista.setAdapter(adaptador);
         db = FirebaseFirestore.getInstance();
 
@@ -77,8 +66,9 @@ public class ClienteActivity extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Producto pro = (Producto) productos.get(position);
-                Toast.makeText(ClienteActivity.this, pro.getNombre()+" oe "+pro.getPrecio() , Toast.LENGTH_LONG).show();
+
+                Carrito.agregar(productos.get(position));
+                Toast.makeText(ClienteActivity.this, "Agregado al carrito" , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -121,8 +111,11 @@ public class ClienteActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     String clave = input.getText().toString().trim().toLowerCase();
                     if (clave.equals("delivery")) {
+                        Toast.makeText(ClienteActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+
                         startActivity(new Intent(ClienteActivity.this, RestauranteActivity.class));
                     } else {
+                        Toast.makeText(ClienteActivity.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
@@ -141,11 +134,6 @@ public class ClienteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-<<<<<<< HEAD
-
-    public void cargarDatos(String categoria) {
-=======
->>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
 
     public void cargarDatos(String categoria) {
         productos.clear();
@@ -161,15 +149,8 @@ public class ClienteActivity extends AppCompatActivity {
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
 
                             for (DocumentSnapshot doc : list) {
-<<<<<<< HEAD
-
-                                Producto pro = doc.toObject(Producto.class);
-                                productos.add(pro);
-
-=======
                                 Producto producto = doc.toObject(Producto.class);
                                 productos.add(producto);
->>>>>>> 6a86e13c518e0adeae1a7ce16dfb4651d588b519
                             }
 
                             adaptador.notifyDataSetChanged();
