@@ -41,6 +41,18 @@ public class RestauranteActivity extends AppCompatActivity {
         ListView lista = findViewById(R.id.lista_pedidos);
         adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1, Pedidos.getPedidos());
         lista.setAdapter(adaptador);
+        cargarDatos();
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent detalle = new Intent(RestauranteActivity.this, DetalleActivity.class);
+                detalle.putExtra("pedido",position);
+                startActivity(detalle);
+            }
+        });
+    }
+    public void cargarDatos(){
+        adaptador.clear();
         db = FirebaseFirestore.getInstance();
         db.collection("pedidos")
                 .get()
@@ -60,14 +72,6 @@ public class RestauranteActivity extends AppCompatActivity {
                         }
                     }
                 });
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detalle = new Intent(RestauranteActivity.this, DetalleActivity.class);
-                detalle.putExtra("pedido",position);
-                startActivity(detalle);
-            }
-        });
     }
 
     @Override
@@ -86,8 +90,8 @@ public class RestauranteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_restaurante) {
-            startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            startActivity(new Intent(RestauranteActivity.this, ClienteActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
         }
 
         if (id == R.id.action_registrar) {
