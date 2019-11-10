@@ -1,5 +1,8 @@
 package com.delivery.deliveryrestaurante;
 
+import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.delivery.deliveryrestaurante.clases.Producto;
@@ -9,6 +12,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +23,22 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class RegistroActivity extends AppCompatActivity {
     private FirebaseFirestore db;
+    private StorageReference storage;
     private Spinner categorias;
     private EditText nombre;
     private EditText precio;
     private Button boton;
-
+    private Button botonFoto;
+    private String imagen;
+    private static final int GALLERY_INTENT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,21 +47,30 @@ public class RegistroActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance().getReference();
 
         categorias = findViewById(R.id.registro_categoria);
         nombre = findViewById(R.id.registro_nombre);
         precio = findViewById(R.id.registro_precio);
         boton = findViewById(R.id.registrar);
+        botonFoto = findViewById(R.id.addFoto);
+
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 registrar();
             }
         });
+        botonFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirImagen();
+            }
+        });
     }
 
     public void registrar() {
-        final Producto pro = new Producto("imagen", nombre.getText().toString(), categorias.getSelectedItem().toString(), Double.parseDouble(precio.getText().toString()), "ID");
+        final Producto pro = new Producto(imagen, nombre.getText().toString(), categorias.getSelectedItem().toString(), Double.parseDouble(precio.getText().toString()), "ID");
 
 
         db.collection("productos")
@@ -85,9 +106,53 @@ public class RegistroActivity extends AppCompatActivity {
                 });
     }
 
+    public void abrirImagen(){
+        Intent intend = new Intent(Intent.ACTION_PICK).setType("image/*");
+        startActivityForResult(intend,GALLERY_INTENT);
+
+    }
+
     public void limpiar() {
         nombre.getText().clear();
         precio.getText().clear();
+        botonFoto.setText(R.string.boton_foto);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_INTENT && resultCode ==RESULT_OK ){
+            Uri file = data.getData();
+            final StorageReference ref = storage.child("images/"+file.getLastPathSegment()+".jpg");
+            UploadTask uploadTask = ref.putFile(file);
+
+//           Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(RegistroActivity.this, "Imagen no agregada", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    Toast.makeText(RegistroActivity.this, "Imagen agregada", Toast.LENGTH_SHORT).show();
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            imagen = uri.toString();
+                            boton.setEnabled(true);
+                            botonFoto.setText(R.string.boton_foto_agregada);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
+                }
+            });
+        }
+
     }
 
 }
