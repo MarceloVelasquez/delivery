@@ -113,7 +113,7 @@ public class ClienteActivity extends AppCompatActivity {
                     if (clave.equals("delivery")) {
                         Toast.makeText(ClienteActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(ClienteActivity.this, RestauranteActivity.class));
+                        startActivity(new Intent(ClienteActivity.this, RestauranteActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                     } else {
                         Toast.makeText(ClienteActivity.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
