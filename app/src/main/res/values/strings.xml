@@ -24,6 +24,8 @@
     <string name="label_telefono">Digite su numero de telefono</string>
     <string name="label_direccion">Escriba su dirección</string>
     <string name="label_dinero">Efectivo a pagar</string>
+    <string name="label_pagar">Pagado con </string>
+    <string name="label_vuelto">Vuelto </string>
     <string name="registro_nombre">Ingrese el nombre</string>
     <string name="registro_precio">Precio</string>
 
