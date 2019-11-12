@@ -1,10 +1,10 @@
 package com.delivery.deliveryrestaurante;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.delivery.deliveryrestaurante.clases.Carrito;
 import com.delivery.deliveryrestaurante.clases.Producto;
 import com.delivery.deliveryrestaurante.clases.ProductoAdaptador;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,14 @@ public class ClienteActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Carrito.agregar(productos.get(position));
+                Toast.makeText(ClienteActivity.this, "Agregado al carrito" , Toast.LENGTH_LONG).show();
             }
         });
 
@@ -101,8 +110,11 @@ public class ClienteActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     String clave = input.getText().toString().trim().toLowerCase();
                     if (clave.equals("delivery")) {
-                        startActivity(new Intent(ClienteActivity.this, RestauranteActivity.class));
+                        Toast.makeText(ClienteActivity.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(ClienteActivity.this, RestauranteActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                     } else {
+                        Toast.makeText(ClienteActivity.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
@@ -124,6 +136,8 @@ public class ClienteActivity extends AppCompatActivity {
 
     public void cargarDatos(String categoria) {
         productos.clear();
+        adaptador.notifyDataSetChanged();
+
         db.collection("productos").whereEqualTo("categoria", categoria)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -143,4 +157,5 @@ public class ClienteActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

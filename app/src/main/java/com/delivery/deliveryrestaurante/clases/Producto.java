@@ -5,10 +5,14 @@ import java.text.DecimalFormat;
 public class Producto {
     private String nombre;
     private String categoria;
-    private float precio;
+    private double precio;
     private String id;
+    private String imagen;
 
-    public Producto(String nombre, String categoria, float precio, String id) {
+
+
+    public Producto(String imagen, String nombre, String categoria, double precio, String id) {
+        this.setImagen(imagen);
         this.setNombre(nombre);
         this.setCategoria(categoria);
         this.setPrecio(precio);
@@ -19,7 +23,7 @@ public class Producto {
 
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -47,11 +51,18 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

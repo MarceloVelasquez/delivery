@@ -30,6 +30,9 @@
     <string name="boton_pedir">Hacer pedido</string>
     <string name="boton_registrar">Registrar</string>
     <string name="boton_comprar">Comprar</string>
+    <string name="boton_foto">Agregar imagen</string>
+    <string name="boton_foto_agregada">Imagen agregada</string>
+
 
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
