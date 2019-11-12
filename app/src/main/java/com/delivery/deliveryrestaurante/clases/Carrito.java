@@ -15,4 +15,7 @@ public class Carrito {
    public static void eliminar(int pos){
        productos.remove(pos);
    }
+   public static void vaciar(){
+        productos.clear();
+   }
 }
