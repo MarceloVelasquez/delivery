@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.delivery.deliveryrestaurante.clases.Pedido;
+import com.delivery.deliveryrestaurante.clases.PedidoAdaptador;
 import com.delivery.deliveryrestaurante.clases.Pedidos;
 import com.delivery.deliveryrestaurante.clases.Producto;
 import com.delivery.deliveryrestaurante.clases.ProductoAdaptador;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class RestauranteActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private ArrayAdapter adaptador;
+    private PedidoAdaptador adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class RestauranteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ListView lista = findViewById(R.id.lista_pedidos);
-        adaptador = new ArrayAdapter(this,android.R.layout.simple_list_item_1, Pedidos.getPedidos());
+        adaptador = new PedidoAdaptador(this,Pedidos.getPedidos());
         lista.setAdapter(adaptador);
         cargarDatos();
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
