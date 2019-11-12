@@ -49,6 +49,7 @@ public class ClienteActivity extends AppCompatActivity {
         categorias = findViewById(R.id.spinner);
         adaptador = new ProductoAdaptador(this, productos);
         lista.setAdapter(adaptador);
+
         db = FirebaseFirestore.getInstance();
 
         categorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
