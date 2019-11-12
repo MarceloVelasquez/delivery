@@ -27,6 +27,7 @@ public class DatosActivity extends AppCompatActivity {
     EditText nombre;
     EditText telefono;
     EditText direccion;
+    EditText efectivo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class DatosActivity extends AppCompatActivity {
         nombre = findViewById(R.id.datos_nombre);
         telefono = findViewById(R.id.datos_telefono);
         direccion = findViewById(R.id.datos_direccion);
+        efectivo = findViewById(R.id.datos_dinero);
         Button hacerPedido = findViewById(R.id.hacer_pedido);
         db = FirebaseFirestore.getInstance();
         hacerPedido.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +50,7 @@ public class DatosActivity extends AppCompatActivity {
     }
 
     public void registrar() {
-        final Pedido ped = new Pedido(nombre.getText().toString(),telefono.getText().toString(),direccion.getText().toString(), Carrito.getProductos());
+        final Pedido ped = new Pedido(nombre.getText().toString(),telefono.getText().toString(),direccion.getText().toString(),0,0, Double.parseDouble(efectivo.getText().toString()),Carrito.getProductos());
 
 
         db.collection("pedidos")
