@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class DatosActivity extends AppCompatActivity {
     EditText telefono;
     EditText direccion;
     EditText efectivo;
+    Button hacerPedido;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class DatosActivity extends AppCompatActivity {
         telefono = findViewById(R.id.datos_telefono);
         direccion = findViewById(R.id.datos_direccion);
         efectivo = findViewById(R.id.datos_dinero);
-        Button hacerPedido = findViewById(R.id.hacer_pedido);
+        hacerPedido = findViewById(R.id.hacer_pedido);
         db = FirebaseFirestore.getInstance();
         hacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,38 +52,50 @@ public class DatosActivity extends AppCompatActivity {
     }
 
     public void registrar() {
-        final Pedido ped = new Pedido(nombre.getText().toString(),telefono.getText().toString(),direccion.getText().toString(),0,0, Double.parseDouble(efectivo.getText().toString()),Carrito.getProductos());
+        if (TextUtils.isEmpty(nombre.getText().toString())  || TextUtils.isEmpty(telefono.getText().toString()) || TextUtils.isEmpty(direccion.getText().toString()) || TextUtils.isEmpty(efectivo.getText().toString())){
+            Toast.makeText(this, "Complete todos los datos por favor", Toast.LENGTH_LONG).show();
 
+        }else {
 
-        db.collection("pedidos")
-                .add(ped)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        db.collection("pedidos").document(documentReference.getId())
-                                .update("id", documentReference.getId())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(DatosActivity.this, "Pedido registrado", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(DatosActivity.this, ClienteActivity.class));
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(DatosActivity.this, "Pedido no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DatosActivity.this, "Pedido no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            final Pedido ped = new Pedido(nombre.getText().toString(),telefono.getText().toString(),direccion.getText().toString(),0,0, Double.parseDouble(efectivo.getText().toString()),Carrito.getProductos());
 
-                    }
-                });
+           if (ped.getTotal()> ped.getEfectivo()){
+               Toast.makeText(this, "El efectivo es insuficiente", Toast.LENGTH_LONG).show();
+
+           }else {
+               hacerPedido.setEnabled(false);
+               db.collection("pedidos")
+                       .add(ped)
+                       .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                           @Override
+                           public void onSuccess(DocumentReference documentReference) {
+                               db.collection("pedidos").document(documentReference.getId())
+                                       .update("id", documentReference.getId())
+                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+                                               Toast.makeText(DatosActivity.this, "Pedido registrado", Toast.LENGTH_LONG).show();
+                                               Carrito.vaciar();
+                                               startActivity(new Intent(DatosActivity.this, ClienteActivity.class));
+                                           }
+                                       })
+                                       .addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               Toast.makeText(DatosActivity.this, "Pedido no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                           }
+                                       });
+                           }
+                       })
+                       .addOnFailureListener(new OnFailureListener() {
+                           @Override
+                           public void onFailure(@NonNull Exception e) {
+                               Toast.makeText(DatosActivity.this, "Pedido no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                           }
+                       });
+           }
+        }
     }
 
 

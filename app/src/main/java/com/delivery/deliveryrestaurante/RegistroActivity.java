@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,7 @@ public class RegistroActivity extends AppCompatActivity {
     private Button boton;
     private Button botonFoto;
     private String imagen;
+    private boolean imagenCargada;
     private static final int GALLERY_INTENT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imagenCargada = false;
 
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance().getReference();
@@ -70,40 +73,45 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void registrar() {
-        final Producto pro = new Producto(imagen, nombre.getText().toString(), categorias.getSelectedItem().toString(), Double.parseDouble(precio.getText().toString()), "ID");
 
+        if (!imagenCargada || TextUtils.isEmpty(nombre.getText().toString()) || TextUtils.isEmpty(precio.getText().toString())){
+            Toast.makeText(this, "Complete todos los datos por favor", Toast.LENGTH_SHORT).show();
+        }else {
 
-        db.collection("productos")
-                .add(pro)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        db.collection("productos").document(documentReference.getId())
-                                .update("id", documentReference.getId())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(RegistroActivity.this, "Producto registrado", Toast.LENGTH_SHORT).show();
-                                        limpiar();
+            final Producto pro = new Producto(imagen, nombre.getText().toString(), categorias.getSelectedItem().toString(), Double.parseDouble(precio.getText().toString()), "ID");
+            boton.setEnabled(false);
+            db.collection("productos")
+                    .add(pro)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            db.collection("productos").document(documentReference.getId())
+                                    .update("id", documentReference.getId())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(RegistroActivity.this, "Producto registrado", Toast.LENGTH_SHORT).show();
+                                            limpiar();
 
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(RegistroActivity.this, "Producto no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(RegistroActivity.this, "Producto no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegistroActivity.this, "Producto no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegistroActivity.this, "Producto no registrado" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+                        }
+                    });
+        }
     }
 
     public void abrirImagen(){
@@ -135,13 +143,16 @@ public class RegistroActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    Toast.makeText(RegistroActivity.this, "Imagen agregada", Toast.LENGTH_SHORT).show();
                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             imagen = uri.toString();
                             boton.setEnabled(true);
+                            imagenCargada = true;
                             botonFoto.setText(R.string.boton_foto_agregada);
+                            Toast.makeText(RegistroActivity.this, "Imagen agregada", Toast.LENGTH_SHORT).show();
+
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
