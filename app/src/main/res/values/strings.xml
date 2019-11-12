@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Delivery Restaurante</string>
 
-    <string name="opcion_admin">Cambiar a Restaurante</string>
-    <string name="opcion_cliente">Cambiar a Cliente</string>
+    <string name="opcion_admin">Ver pedidos</string>
+    <string name="opcion_cliente">Ver productos</string>
     <string name="opcion_registrar">Agregar productos</string>
 
     <string name="titulo_carrito">Carrito de compra</string>
@@ -23,6 +23,7 @@
     <string name="label_nombre">Ingrese su nombre</string>
     <string name="label_telefono">Digite su numero de telefono</string>
     <string name="label_direccion">Escriba su dirección</string>
+    <string name="label_dinero">Efectivo a pagar</string>
     <string name="registro_nombre">Ingrese el nombre</string>
     <string name="registro_precio">Precio</string>
 
