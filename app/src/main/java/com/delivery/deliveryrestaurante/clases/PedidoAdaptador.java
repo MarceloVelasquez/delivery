@@ -1,5 +1,6 @@
 package com.delivery.deliveryrestaurante.clases;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ public class PedidoAdaptador extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Pedido pedido = (Pedido) getItem(position);
@@ -46,9 +48,11 @@ public class PedidoAdaptador extends BaseAdapter {
         TextView cantidad = convertView.findViewById(R.id.item_cantidad);
         TextView total = convertView.findViewById(R.id.item_total);
 
+        String cant = pedido.getCantidad() + " productos";
+
         cliente.setText(pedido.getNombre());
         direccion.setText(pedido.getDireccion());
-        cantidad.setText(pedido.getCantidad()+"");
+        cantidad.setText(cant);
         total.setText(pedido.getTotalEnSoles());
 
         return convertView;

@@ -76,7 +76,7 @@ public class DatosActivity extends AppCompatActivity {
                                            public void onSuccess(Void aVoid) {
                                                Toast.makeText(DatosActivity.this, "Pedido registrado", Toast.LENGTH_LONG).show();
                                                Carrito.vaciar();
-                                               startActivity(new Intent(DatosActivity.this, ClienteActivity.class));
+                                               startActivity(new Intent(DatosActivity.this, ClienteActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
                                            }
                                        })
                                        .addOnFailureListener(new OnFailureListener() {

@@ -5,8 +5,9 @@ import java.util.List;
 
 public class Carrito {
 
-    private static ArrayList productos = new ArrayList<Producto>();
-    public static ArrayList getProductos() {
+    private static ArrayList<Producto> productos = new ArrayList<>();
+
+    public static ArrayList<Producto> getProductos() {
         return productos;
     }
    public static void agregar( Producto pro){
